@@ -26,13 +26,13 @@ func main() {
 	healthPotionDropChance := 50
 	runChance := 30
 
-	running := true
+	//running := true
 
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Println("Welcome to the Dungeon!")
 	fmt.Println("---------------------")
 GAME:
-	for running == true {
+	for {
 
 		//TODO: game functionality below
 		//I found some example code on how to read player input with a scanner in Golang
@@ -45,7 +45,7 @@ GAME:
 		for enemyHealth > 0 { // for is Go's "while loop"
 
 			// few examples of converting integer to string
-			fmt.Sprintf("%s %d", "\tYour HP:", health)                        // reminiscent of C
+			fmt.Println(fmt.Sprintf("%s %d", "\tYour HP:", health))           // reminiscent of C
 			fmt.Println("\t" + enemy + "'s HP: " + strconv.Itoa(enemyHealth)) // closer to java concat
 
 			fmt.Println("\n\tWhat would you like to do?")
@@ -104,6 +104,52 @@ GAME:
 			} else {
 				fmt.Println("\tInvalid command!")
 			}
+		}
+
+		if health < 1 {
+			fmt.Println("\n You limp out of the dungeon, weak from battle.")
+			fmt.Println("\n  #########")
+			fmt.Println("# Game Over #")
+			fmt.Println("  #########")
+			break
+		}
+
+		fmt.Println("-------------------------------------")
+		fmt.Println("\t # " + enemy + " was defeated! # ")
+		fmt.Println(fmt.Sprintf("%s %d %s", "\t # You have", health, "health left."))
+
+		if rand.Intn(100) < healthPotionDropChance {
+			numHealthPots++
+			fmt.Println("\t # The " + enemy + " dropped a health potion! # ")
+			fmt.Println(fmt.Sprintf("%s %d %s", "\t # You now have", numHealthPots, "health potion(s) left. # "))
+		}
+
+		fmt.Println("-------------------------------------")
+		fmt.Println("\t What would you like to do now?")
+		fmt.Println("\t 1. Continue fighting")
+		fmt.Println("\t 2. Exit dungeon")
+
+		fmt.Print("-> ")
+		text, _ := reader.ReadString('\n')
+		// convert CRLF to LF
+		text = strings.Replace(text, "\r\n", "", -1)
+
+		for strings.Compare(text, "1") != 0 && strings.Compare(text, "2") != 0 {
+			fmt.Println("\t Invalid Command!")
+			fmt.Print("-> ")
+			text, _ = reader.ReadString('\n')
+			// convert CRLF to LF
+			text = strings.Replace(text, "\r\n", "", -1)
+		}
+
+		if strings.Compare(text, "1") == 0 {
+			fmt.Println("\t You continue on your adventure!")
+		} else if strings.Compare(text, "2") == 0 {
+			fmt.Println("\nYou exit the dungeon, successful from your adventures!")
+			fmt.Println("\n  ###################")
+			fmt.Println("# THANKS FOR PLAYING! #")
+			fmt.Println("  ###################")
+			break
 		}
 
 		// if strings.Compare("hi", text) == 0 {
