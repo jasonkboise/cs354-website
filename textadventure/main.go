@@ -34,10 +34,6 @@ func main() {
 GAME:
 	for {
 
-		//TODO: game functionality below
-		//I found some example code on how to read player input with a scanner in Golang
-		//I put that below.
-
 		enemyHealth := rand.Intn(maxEnemyHealth)  // random number with upper bound of maxhealth
 		enemy := enemies[rand.Intn(len(enemies))] // random enemy in slice
 		fmt.Println("\t# " + enemy + " has appeared! #\n")
@@ -49,7 +45,7 @@ GAME:
 			fmt.Println("\t" + enemy + "'s HP: " + strconv.Itoa(enemyHealth)) // closer to java concat
 
 			fmt.Println("\n\tWhat would you like to do?")
-			fmt.Println("\t1.Attack")
+			fmt.Println("\t1. Attack")
 			fmt.Println("\t2. Drink health potion")
 			fmt.Println("\t3. Run!")
 
@@ -106,6 +102,7 @@ GAME:
 			}
 		}
 
+		//game over check
 		if health < 1 {
 			fmt.Println("\n You limp out of the dungeon, weak from battle.")
 			fmt.Println("\n  #########")
@@ -118,12 +115,14 @@ GAME:
 		fmt.Println("\t # " + enemy + " was defeated! # ")
 		fmt.Println(fmt.Sprintf("%s %d %s", "\t # You have", health, "health left."))
 
+		//check for a potion drop
 		if rand.Intn(100) < healthPotionDropChance {
 			numHealthPots++
 			fmt.Println("\t # The " + enemy + " dropped a health potion! # ")
 			fmt.Println(fmt.Sprintf("%s %d %s", "\t # You now have", numHealthPots, "health potion(s) left. # "))
 		}
 
+		//check if player wants to keep going
 		fmt.Println("-------------------------------------")
 		fmt.Println("\t What would you like to do now?")
 		fmt.Println("\t 1. Continue fighting")
@@ -131,17 +130,20 @@ GAME:
 
 		fmt.Print("-> ")
 		text, _ := reader.ReadString('\n')
-		// convert CRLF to LF
 		text = strings.Replace(text, "\r\n", "", -1)
 
+		//if not a command, give error
 		for strings.Compare(text, "1") != 0 && strings.Compare(text, "2") != 0 {
 			fmt.Println("\t Invalid Command!")
+			fmt.Println("\n\t What would you like to do now?")
+			fmt.Println("\t 1. Continue fighting")
+			fmt.Println("\t 2. Exit dungeon")
 			fmt.Print("-> ")
 			text, _ = reader.ReadString('\n')
-			// convert CRLF to LF
 			text = strings.Replace(text, "\r\n", "", -1)
 		}
 
+		//exit game
 		if strings.Compare(text, "1") == 0 {
 			fmt.Println("\t You continue on your adventure!")
 		} else if strings.Compare(text, "2") == 0 {
@@ -151,10 +153,6 @@ GAME:
 			fmt.Println("  ###################")
 			break
 		}
-
-		// if strings.Compare("hi", text) == 0 {
-		// 	fmt.Println("hello, Yourself")
-		// }
 
 	}
 
