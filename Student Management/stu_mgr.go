@@ -2,29 +2,24 @@ package main
 
 import "fmt"
 
-type student struct 
-{
+type student struct {
 	id   int64
 	name string
 }
 
 
-type studentMgr struct 
-{
+type studentMgr struct {
 	allStudent map[int64]student
 }
 
 
-func (s studentMgr) showAllStudent() 
-{
-	for _, stu := range s.allStudent 
-	{
+func (s studentMgr) showAllStudent() {
+	for _, stu := range s.allStudent {
 		fmt.Printf("Student ID:%d Student Nmae:%s\n", stu.id, stu.name)
 	}
 }
 
-func (s studentMgr) addStudent() 
-{
+func (s studentMgr) addStudent() {
 	var 
 	(
 		stuID   int64
@@ -35,8 +30,7 @@ func (s studentMgr) addStudent()
 	fmt.Print("Please Enter The Student Name:")
 	fmt.Scanln(&stuName)
 	
-	newStu := student
-	{
+	newStu := student{
 		id:   stuID,
 		name: stuName,
 	} 
@@ -44,16 +38,14 @@ func (s studentMgr) addStudent()
 	s.allStudent[newStu.id] = newStu
 }
 
-func (s studentMgr) deleteStudent() 
-{
+func (s studentMgr) deleteStudent() {
 	
 	var deleteID int64
 	fmt.Print("Please Enter The Student ID That You Want To Delete:")
 	fmt.Scanln(&deleteID)
 	
 	_, ok := s.allStudent[deleteID]
-	if !ok 
-	{
+	if !ok {
 		fmt.Println("No Such Person Found")
 		return
 	}
@@ -62,16 +54,14 @@ func (s studentMgr) deleteStudent()
 }
 
 
-func (s studentMgr) editStudent() 
-{
+func (s studentMgr) editStudent() {
 	
 	var editID int64
 	fmt.Print("Please Enter The Student ID That You Want To Modify:")
 	fmt.Scanln(&editID)
 	
 	stuObj, ok := s.allStudent[editID]
-	if !ok 
-	{
+	if !ok {
 		fmt.Println("No Such Person Found")
 		return
 	}
