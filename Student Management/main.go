@@ -6,11 +6,9 @@ import
 	"os"
 )
 
-func showMenu() 
-{
+func showMenu() {
 	fmt.Println("Welcome")
-	fmt.Println
-	(`
+	fmt.Println(`
 		1.View Student Information
 		2.Add Student Information
 		3.Delete Student Information
@@ -21,14 +19,11 @@ func showMenu()
 
 var smr studentMgr
 
-func main() 
-{
-	var smr = studentMgr
-	{
+func main() {
+	var smr = studentMgr{
 		allStudent: make(map[int64]student, 100),
 	}
-	for 
-	{
+	for {
 
 		showMenu()
 		fmt.Print("Enter The Number:")
@@ -36,8 +31,7 @@ func main()
 		var choice int
 		fmt.Scanln(&choice)
 		
-		switch choice 
-		{
+		switch choice {
 			case 1:
 				smr.showAllStudent()
 			case 2:
